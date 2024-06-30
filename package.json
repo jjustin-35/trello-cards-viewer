@@ -1,0 +1,7 @@
+{
+  "name": "trello-card-viewer-extension",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "justin",
+  "license": "MIT"
+}
