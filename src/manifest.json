@@ -7,6 +7,6 @@
     "https://api.trello.com/*"
   ],
   "browser_action": {
-    "default_popup": "popup.html"
+    "default_popup": "index.html"
   }
 }
