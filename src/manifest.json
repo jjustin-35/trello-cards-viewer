@@ -3,10 +3,10 @@
   "name": "Trello Card Viewer",
   "version": "1.0",
   "description": "View Trello cards sorted by date",
-  "permissions": [
+  "host_permissions": [
     "https://api.trello.com/*"
   ],
-  "browser_action": {
+  "action": {
     "default_popup": "index.html"
   }
 }
