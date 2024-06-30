@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "module": "commonjs",
+    "strict": false,
+    "module": "NodeNext",
     "target": "es6",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "sourceMap": true,
     "rootDir": "src",
