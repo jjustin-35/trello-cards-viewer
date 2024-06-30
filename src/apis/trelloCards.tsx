@@ -20,7 +20,8 @@ const fetchCards = async (url: string) => {
   try {
     const response = await axios.get(url, {
       params: {
-        key: process.env.TRELLO_TOKEN,
+        key: process.env.TRELLO_API_KEY,
+        token: process.env.TRELLO_API_TOKEN,
         fields: "name,desc,due,labels",
       },
     });

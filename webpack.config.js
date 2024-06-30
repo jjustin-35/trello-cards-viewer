@@ -15,6 +15,10 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   resolve: {
@@ -30,4 +34,11 @@ module.exports = {
       ],
     }),
   ],
+  devServer: {
+    port: '3000',
+    static: ['./dist'],
+    open: true,
+    hot: true,
+    liveReload: true,
+  },
 };
