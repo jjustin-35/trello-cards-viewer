@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { format, parse, isSameDay } from "date-fns";
 import useTrelloCards from "../../apis/trelloCards";
+import Card from "../Card";
 import "./styles.css";
 
 const App: React.FC = () => {
@@ -48,23 +49,7 @@ const App: React.FC = () => {
       />
       <div>
         {cardsData.map((card) => (
-          <div key={card.id} className="card">
-            <h2 className="card-title">{card.name}</h2>
-            <div className="card-tags">
-              {card.labels.map((label, index) => (
-                <span key={index} className="tag">
-                  {label.name}
-                </span>
-              ))}
-            </div>
-            <p className="card-desc">{card.desc || card.name}</p>
-            <p className="card-date">
-              {card.due
-                ? format(new Date(card.due), "MMMM d, yyyy")
-                : "No due date"}
-            </p>
-            <p className="card-hours">Hours: {card.hours}</p>
-          </div>
+          <Card key={card.id} card={card} />
         ))}
       </div>
     </div>

@@ -4,7 +4,7 @@ import { subMonths } from "date-fns";
 import config from "../config";
 import { apiPaths } from "../constants/apisPath";
 
-export interface TrelloCard {
+interface TrelloCard {
   id: string;
   name: string;
   desc: string;
@@ -12,7 +12,7 @@ export interface TrelloCard {
   due: string | null;
 }
 
-interface DisplayCard extends TrelloCard {
+export interface DisplayCard extends TrelloCard {
   hours: number;
 }
 
