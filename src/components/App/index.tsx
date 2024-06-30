@@ -4,7 +4,7 @@ import useTrelloCards from "../../apis/trelloCards";
 import "./styles.css";
 
 const App: React.FC = () => {
-  const { data: cards, error } = useTrelloCards();
+  const { data: cards } = useTrelloCards();
   const [selectedDate, setSelectedDate] = useState<string>(
     format(new Date(), "yyyy-MM-dd")
   );
@@ -40,30 +40,34 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-    <h1>Trello Card Viewer</h1>
-    <input
-      type="date"
-      value={selectedDate}
-      onChange={(e) => setSelectedDate(e.target.value)}
-    />
-    <div>
-      {cardsData.map((card) => (
-        <div key={card.id} className="card">
-          <h2 className="card-title">{card.name}</h2>
-          <div className="card-tags">
-            {card.labels.map((label, index) => (
-              <span key={index} className="tag">{label.name}</span>
-            ))}
+      <h1>Trello Card Viewer</h1>
+      <input
+        type="date"
+        value={selectedDate}
+        onChange={(e) => setSelectedDate(e.target.value)}
+      />
+      <div>
+        {cardsData.map((card) => (
+          <div key={card.id} className="card">
+            <h2 className="card-title">{card.name}</h2>
+            <div className="card-tags">
+              {card.labels.map((label, index) => (
+                <span key={index} className="tag">
+                  {label.name}
+                </span>
+              ))}
+            </div>
+            <p className="card-desc">{card.desc || card.name}</p>
+            <p className="card-date">
+              {card.due
+                ? format(new Date(card.due), "MMMM d, yyyy")
+                : "No due date"}
+            </p>
+            <p className="card-hours">Hours: {card.hours}</p>
           </div>
-          <p className="card-desc">{card.desc || card.name}</p>
-          <p className="card-date">
-            {card.due ? format(new Date(card.due), 'MMMM d, yyyy') : 'No due date'}
-          </p>
-          <p className="card-hours">Hours: {card.hours}</p>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  </div>
   );
 };
 
