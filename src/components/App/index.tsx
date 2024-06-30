@@ -4,10 +4,12 @@ import useTrelloCards from "../../apis/trelloCards";
 import Card from "../Card";
 import "./styles.css";
 
+const dateFormat = "yyy-MM-dd";
+
 const App: React.FC = () => {
   const { data: cards } = useTrelloCards();
   const [selectedDate, setSelectedDate] = useState<string>(
-    format(new Date(), "yyyy-MM-dd")
+    format(new Date(), dateFormat)
   );
 
   const getCardsForSelectedDate = () => {
@@ -15,7 +17,7 @@ const App: React.FC = () => {
       (card) =>
         card.due &&
         isSameDay(
-          parse(selectedDate, "yyyy-MM-dd", new Date()),
+          parse(selectedDate, dateFormat, new Date()),
           new Date(card.due)
         )
     );
