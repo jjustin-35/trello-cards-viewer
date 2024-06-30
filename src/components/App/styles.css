@@ -9,6 +9,11 @@
   box-sizing: border-box;
 }
 
+.title {
+  color: white;
+  text-align: center;
+}
+
 input[type="date"] {
   display: block;
   width: 100%;

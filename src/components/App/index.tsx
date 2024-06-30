@@ -41,7 +41,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <h1>Trello Card Viewer</h1>
+      <h1 className="title">Trello Card Viewer</h1>
       <input
         type="date"
         value={selectedDate}
