@@ -1,6 +1,6 @@
 import React from "react";
 import { format } from "date-fns";
-import { DisplayCard } from "../../apis/trelloCards";
+import { DisplayCard } from "../../apis/useTrelloCards";
 import "./styles.css";
 
 const Card: React.FC<{ card: DisplayCard }> = ({ card }) => {

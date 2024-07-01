@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { format, parse, isSameDay } from "date-fns";
-import useTrelloCards from "../../apis/trelloCards";
+import useTrelloCards from "../../apis/useTrelloCards";
 import Card from "../Card";
 import "./styles.css";
 
@@ -30,10 +30,13 @@ const App: React.FC = () => {
     const totalHours = selectedCards.reduce((sum, card) => sum + card.hours, 0);
     if (totalHours !== 8) {
       const adjustmentFactor = 8 / totalHours;
-      return selectedCards.map((card) => ({
-        ...card,
-        hours: Math.round(card.hours * adjustmentFactor),
-      }));
+      return selectedCards.map((card) => {
+        const hours = Math.round(card.hours * adjustmentFactor) || 0.5;
+        return {
+          ...card,
+          hours,
+        };
+      });
     }
 
     return selectedCards;
