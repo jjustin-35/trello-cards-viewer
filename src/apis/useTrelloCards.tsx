@@ -10,6 +10,7 @@ interface TrelloCard {
   desc: string;
   labels: { name: string }[];
   due: string | null;
+  dueComplete: boolean;
 }
 
 export interface DisplayCard extends TrelloCard {
@@ -18,20 +19,21 @@ export interface DisplayCard extends TrelloCard {
 
 const fetchCards = async (url: string) => {
   try {
-    const response = await axios.get(url, {
+    const response = await axios.get<TrelloCard[]>(url, {
       params: {
         key: process.env.TRELLO_API_KEY,
         token: process.env.TRELLO_API_TOKEN,
-        fields: "name,desc,due,labels",
+        fields: "name,desc,due,dueComplete,labels",
       },
     });
 
     const oneMonthAgo = subMonths(new Date(), 1);
-    const filteredCards = response.data
+    const filteredCards: DisplayCard[] = response.data
       .filter(
-        (card: TrelloCard) => card.due && new Date(card.due) >= oneMonthAgo
+        (card) =>
+          card.due && new Date(card.due) >= oneMonthAgo && card.dueComplete
       )
-      .map((card: TrelloCard) => ({
+      .map((card) => ({
         ...card,
         hours: Math.floor(Math.random() * 8) + 1,
       }));
