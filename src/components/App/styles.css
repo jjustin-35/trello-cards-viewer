@@ -1,7 +1,8 @@
 .App {
   width: 400px;
   height: 600px;
-  padding: 20px;
+  padding: 16px;
+  margin: 0 auto;
   font-family: Arial, sans-serif;
   color: #333;
   background: linear-gradient(135deg, #3498db, #8e44ad);
