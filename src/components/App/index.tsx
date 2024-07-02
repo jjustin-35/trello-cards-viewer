@@ -4,7 +4,7 @@ import useTrelloCards from "../../apis/useTrelloCards";
 import Card from "../Card";
 import "./styles.css";
 
-const dateFormat = "yyy-MM-dd";
+const dateFormat = "yyyy-MM-dd";
 
 const App: React.FC = () => {
   const { data: cards } = useTrelloCards();
@@ -50,7 +50,10 @@ const App: React.FC = () => {
       <input
         type="date"
         value={selectedDate}
-        onChange={(e) => setSelectedDate(e.target.value)}
+        onChange={(e) => {
+          console.log(e.target.value);
+          setSelectedDate(e.target.value);
+        }}
       />
       <div>
         {cardsData.map((card) => (
