@@ -55,10 +55,12 @@ const App: React.FC = () => {
           setSelectedDate(e.target.value);
         }}
       />
-      <div>
-        {cardsData.map((card) => (
-          <Card key={card.id} card={card} />
-        ))}
+      <div className="card-container">
+        <div className="card-wrapper">
+          {cardsData.map((card) => (
+            <Card key={card.id} card={card} />
+          ))}
+        </div>
       </div>
     </div>
   );

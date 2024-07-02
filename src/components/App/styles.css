@@ -1,6 +1,10 @@
+body {
+  margin: 0;
+}
+
 .App {
-  width: 400px;
-  height: 600px;
+  min-width: 400px;
+  min-height: 600px;
   padding: 16px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
@@ -18,9 +22,28 @@
 input[type="date"] {
   display: block;
   width: 100%;
+  max-width: 400px;
+  margin: 0 auto 40px;
   padding: 8px;
-  margin-bottom: 16px;
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.card-container {
+  container-type: inline-size;
+  container-name: card-container;
+}
+
+.card-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 40px 30px;
+}
+
+@container card-container (max-width: 400px) {
+  .card-wrapper {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
