@@ -38,13 +38,3 @@ jobs:
         with:
           name: build-artifacts
           path: ./dist
-
-      - name: Publish Chrome extension
-        uses: mobilefirstllc/cws-publish@latest
-        with:
-          action: 'publish' # one of: upload, publish, testers
-          client_id: ${{ secrets.CLIENT_ID }}
-          client_secret: ${{ secrets.CLIENT_SECRET }}
-          refresh_token: ${{ secrets.REFRESH_TOKEN }}
-          extension_id: '<YOUR_EXTENSION_ID>'
-          zip_file: ./dist/manifest.zip
