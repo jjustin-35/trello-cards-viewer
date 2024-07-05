@@ -35,7 +35,10 @@ jobs:
         env:
           TRELLO_API_KEY: ${{ secrets.TRELLO_API_KEY }}
           TRELLO_API_TOKEN: ${{ secrets.TRELLO_API_TOKEN }}
-        run: TRELLO_API_KEY=$TRELLO_API_KEY TRELLO_API_TOKEN=$TRELLO_API_TOKEN yarn build
+        run: |
+          echo "TRELLO_API_KEY=${{ secrets.TRELLO_API_KEY }}" >> .env
+          echo "TRELLO_API_TOKEN=${{ secrets.TRELLO_API_TOKEN }}" >> .env 
+          yarn build
 
       - name: List dist directory contents (for debugging)
         run: ls -la ./dist
