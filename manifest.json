@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Trello Card Viewer",
+  "version": "1.0",
+  "description": "View Trello cards sorted by date",
+  "host_permissions": [
+    "https://api.trello.com/*"
+  ],
+  "action": {
+    "default_popup": "index.html"
+  }
+}
