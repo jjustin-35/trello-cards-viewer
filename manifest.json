@@ -3,10 +3,15 @@
   "name": "Trello Card Viewer",
   "version": "1.0",
   "description": "View Trello cards sorted by date",
-  "host_permissions": [
-    "https://api.trello.com/*"
-  ],
+  "host_permissions": ["https://api.trello.com/*"],
+  "permissions": ["sidePanel"],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
   "action": {
-    "default_popup": "index.html"
+    "default_title": "Click to open panel"
+  },
+  "side_panel": {
+    "default_path": "index.html"
   }
 }
