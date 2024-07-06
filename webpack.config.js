@@ -9,12 +9,13 @@ dotenv.config();
 module.exports = {
   entry: {
     main: "./src/index.tsx",
-    worker: "./src/server-worker.ts",
+    "service-worker": "./src/service-worker.ts",
   },
   output: {
     path: path.resolve(__dirname, "dist"),
+    clean: true,
     filename: (pathData) =>
-      pathData.chunk.name === "worker" ? "server-worker.js" : "bundle.js",
+      pathData.chunk.name === "service-worker" ? "[name].js" : "bundle.js",
   },
   module: {
     rules: [
