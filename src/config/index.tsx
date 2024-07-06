@@ -1,8 +1,6 @@
 enum config {
-  TRELLO = "https://api.trello.com/1",
-  TRELLO_VIEWER_CENTER = "https://us-central1-trello-cards-viewer.cloudfunctions.net",
+  TRELLO_VIEWER_CENTER = "https://gettrellocards-5iwx5ykpgq-uc.a.run.app",
   METRICS = "https://kdan-force.kdanmobile.com/api/v1",
-  BOARD_ID = "63880117d7188d0583a9c9c4",
 }
 
 export default config;

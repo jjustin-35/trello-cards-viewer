@@ -51,7 +51,6 @@ const App: React.FC = () => {
         type="date"
         value={selectedDate}
         onChange={(e) => {
-          console.log(e.target.value);
           setSelectedDate(e.target.value);
         }}
       />

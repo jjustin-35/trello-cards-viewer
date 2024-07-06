@@ -2,7 +2,6 @@ import useSWR from "swr";
 import axios from "axios";
 import { subMonths } from "date-fns";
 import config from "../config";
-import { apiPaths } from "../constants/apisPath";
 
 interface TrelloCard {
   id: string;
@@ -19,16 +18,10 @@ export interface DisplayCard extends TrelloCard {
 
 const fetchCards = async (url: string) => {
   try {
-    const response = await axios.get<TrelloCard[]>(url, {
-      params: {
-        key: process.env.TRELLO_API_KEY,
-        token: process.env.TRELLO_API_TOKEN,
-        fields: "name,desc,due,dueComplete,labels",
-      },
-    });
+    const { data: cards } = await axios.get<TrelloCard[]>(url);
 
     const oneMonthAgo = subMonths(new Date(), 1);
-    const filteredCards: DisplayCard[] = response.data
+    const filteredCards: DisplayCard[] = cards
       .filter(
         (card) =>
           card.due && new Date(card.due) >= oneMonthAgo && card.dueComplete
@@ -45,9 +38,6 @@ const fetchCards = async (url: string) => {
 };
 
 const useTrelloCards = () =>
-  useSWR<DisplayCard[]>(
-    `${config.TRELLO}${apiPaths.GET_BOARD_CARDS}`,
-    fetchCards
-  );
+  useSWR<DisplayCard[]>(config.TRELLO_VIEWER_CENTER, fetchCards);
 
 export default useTrelloCards;
