@@ -1,10 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const { DefinePlugin } = require("webpack");
-const dotenv = require("dotenv");
-
-dotenv.config();
 
 module.exports = {
   entry: {
@@ -39,12 +35,6 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [{ from: "src/manifest.json", to: "manifest.json" }],
-    }),
-    new DefinePlugin({
-      "process.env.TRELLO_API_KEY": JSON.stringify(process.env.TRELLO_API_KEY),
-      "process.env.TRELLO_API_TOKEN": JSON.stringify(
-        process.env.TRELLO_API_TOKEN
-      ),
     }),
   ],
   devServer: {
