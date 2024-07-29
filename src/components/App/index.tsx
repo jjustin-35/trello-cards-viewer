@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { format, parse, isSameDay } from "date-fns";
 import useTrelloCards from "../../apis/useTrelloCards";
+import setMetrics from "../../apis/setMetrics";
 import Card from "../Card";
 import "./styles.css";
 
@@ -44,6 +45,21 @@ const App: React.FC = () => {
 
   const cardsData = getCardsForSelectedDate();
 
+  const onClick = async () => {
+    if (!cardsData.length) {
+      return;
+    }
+
+    cardsData.forEach(async (card) => {
+      await setMetrics({
+        subject_id: 1888,
+        work_date: selectedDate,
+        hours: card.hours,
+        description: card.name,
+      });
+    });
+  };
+
   return (
     <div className="App">
       <h1 className="title">Trello Card Viewer</h1>
@@ -61,6 +77,9 @@ const App: React.FC = () => {
           ))}
         </div>
       </div>
+      <button className="app-button" onClick={onClick}>
+        Add to Metrics
+      </button>
     </div>
   );
 };
