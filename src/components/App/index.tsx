@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { format, parse, isSameDay } from "date-fns";
 import useTrelloCards from "../../apis/useTrelloCards";
-import setMetrics from "../../apis/setMetrics";
+import setMetrics from "../../apis/metrics";
 import Card from "../Card";
 import "./styles.css";
 
