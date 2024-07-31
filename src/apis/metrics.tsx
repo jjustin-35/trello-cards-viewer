@@ -1,5 +1,4 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 import config from "../config";
 import { ApiResponse } from "../constants/types";
 
@@ -13,8 +12,12 @@ export interface MetricsData {
 
 const setMetrics = async (data: MetricsData) => {
   const url = `${config.METRICS}/work_histories`;
+  const accessToken = await chrome.cookies.get({
+    url: config.METRICS_CLIENT,
+    name: "access_token",
+  });
 
-  if (!Cookies.get("token")) {
+  if (!accessToken?.value) {
     console.error("No token found");
     return;
   }
@@ -24,8 +27,8 @@ const setMetrics = async (data: MetricsData) => {
       ApiResponse<Record<string, string>>
     >(url, data, {
       headers: {
-        Authorization: `Bearer ${Cookies.get("token")}`,
-      }
+        Authorization: `Bearer ${accessToken.value}`,
+      },
     });
 
     if (respData.error_code) {
