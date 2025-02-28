@@ -5,13 +5,21 @@ const CopyPlugin = require("copy-webpack-plugin");
 module.exports = {
   entry: {
     main: "./src/index.tsx",
+    content: "./src/content.ts",
     "service-worker": "./src/service-worker.ts",
   },
   output: {
     path: path.resolve(__dirname, "dist"),
     clean: true,
-    filename: (pathData) =>
-      pathData.chunk.name === "service-worker" ? "[name].js" : "bundle.js",
+    filename: (pathData) => {
+      if (
+        pathData.chunk.name === "service-worker" ||
+        pathData.chunk.name === "content"
+      ) {
+        return "[name].js";
+      }
+      return "bundle.js";
+    },
   },
   module: {
     rules: [
