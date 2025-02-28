@@ -5,6 +5,12 @@
   "description": "View Trello cards sorted by date",
   "host_permissions": ["https://api.trello.com/*", "https://kdan-metrics.kdanmobile.com/*"],
   "permissions": ["sidePanel", "cookies"],
+  "content_scripts": [
+    {
+      "matches": ["https://api.trello.com/*", "https://kdan-metrics.kdanmobile.com/*"],
+      "js": ["content.js"]
+    }
+  ],
   "background": {
     "service_worker": "service-worker.js"
   },
