@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { format, parse, isSameDay } from "date-fns";
 import useTrelloCards from "../../apis/useTrelloCards";
-import setMetrics from "../../apis/metrics";
 import Card from "../Card";
 import "./styles.css";
 
@@ -45,13 +44,34 @@ const App: React.FC = () => {
 
   const cardsData = getCardsForSelectedDate();
 
+  const handleSubmit = async (data: any) => {
+    try {
+      const tabs = await chrome.tabs.query({
+        active: true,
+        currentWindow: true,
+      });
+      const response = await chrome.tabs.sendMessage(tabs[0].id, {
+        type: "SET_METRICS",
+        data,
+      });
+
+      if (response?.success) {
+        console.log("Metrics set successfully");
+      } else {
+        console.error("Failed to set metrics:", response?.error);
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
+  };
+
   const onClick = async () => {
     if (!cardsData.length) {
       return;
     }
 
     cardsData.forEach(async (card) => {
-      await setMetrics({
+      await handleSubmit({
         subject_id: 1888,
         work_date: selectedDate,
         hours: card.hours,
