@@ -1,5 +1,5 @@
 export const projectsTransform = {
-  "licensing service center": 45,
+  "licensing sevice center": 45,
   dottedsign: 4,
   "kdan website": 39,
   商城: 38,
