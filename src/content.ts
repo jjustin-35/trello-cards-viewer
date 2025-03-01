@@ -24,10 +24,6 @@ chrome.runtime.onMessage.addListener(
         };
 
         const result = await setMetrics(data);
-        if (!result.error) {
-          window.location.reload();
-          return;
-        }
         sendResponse({ success: !result.error });
       } catch (error) {
         console.error("Error setting metrics:", error);

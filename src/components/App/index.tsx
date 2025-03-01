@@ -20,7 +20,7 @@ const App: React.FC = () => {
     format(new Date(), dateFormat)
   );
 
-  const getCardsForSelectedDate = () => {
+  const cardsData = (() => {
     const selectedCards = cards?.filter(
       (card) =>
         card.due &&
@@ -72,9 +72,7 @@ const App: React.FC = () => {
     }
 
     return selectedCards;
-  };
-
-  const cardsData = getCardsForSelectedDate();
+  })();
 
   const handleSubmit = async (data: ApiCardData) => {
     try {
