@@ -3,11 +3,17 @@
   "name": "Trello Card Viewer",
   "version": "1.0",
   "description": "View Trello cards sorted by date",
-  "host_permissions": ["https://api.trello.com/*", "https://kdan-metrics.kdanmobile.com/*"],
-  "permissions": ["sidePanel", "cookies"],
+  "host_permissions": [
+    "https://api.trello.com/*",
+    "https://kdan-metrics.kdanmobile.com/*"
+  ],
+  "permissions": ["sidePanel", "cookies", "activeTab", "tabs", "windows"],
   "content_scripts": [
     {
-      "matches": ["https://api.trello.com/*", "https://kdan-metrics.kdanmobile.com/*"],
+      "matches": [
+        "https://trello.com/*",
+        "https://kdan-metrics.kdanmobile.com/*"
+      ],
       "js": ["content.js"]
     }
   ],
