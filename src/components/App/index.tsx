@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { format, parse, isSameDay } from "date-fns";
 import useTrelloCards from "../../apis/useTrelloCards";
 import Card from "../Card";
+import Toast from "../Toast";
 import "./styles.css";
 import { urgent } from "../../constants/labels";
 
@@ -19,6 +20,7 @@ const App: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string>(
     format(new Date(), dateFormat)
   );
+  const [isToastVisible, setIsToastVisible] = useState(false);
 
   const cardsData = (() => {
     const selectedCards = cards?.filter(
@@ -94,18 +96,33 @@ const App: React.FC = () => {
         throw new Error("Please open Trello or Metrics page first");
       }
 
-      const response = await chrome.tabs.sendMessage(tabs[0].id, {
-        type: "SET_METRICS",
-        data,
-      });
+      return new Promise<boolean>((resolve) => {
+        chrome.tabs.sendMessage(
+          tabs[0].id,
+          {
+            type: "SET_METRICS",
+            data,
+          },
+          (response) => {
+            if (chrome.runtime.lastError) {
+              console.error("Error sending message:", chrome.runtime.lastError);
+              resolve(false);
+              return;
+            }
 
-      if (response?.success) {
-        console.log("Metrics set successfully");
-      } else {
-        console.error("Failed to set metrics:", response?.error);
-      }
+            if (response?.success) {
+              console.log("Metrics set successfully");
+              resolve(true);
+            } else {
+              console.error("Failed to set metrics:", response?.error);
+              resolve(false);
+            }
+          }
+        );
+      });
     } catch (error) {
       console.error("Error sending message:", error);
+      return false;
     }
   };
 
@@ -114,17 +131,23 @@ const App: React.FC = () => {
       return;
     }
 
-    cardsData.forEach(async (card) => {
+    const promises = cardsData.map(async (card) => {
       const labels = card.labels
         .map((label) => label.name)
         .filter((label) => !urgent.includes(label));
-      await handleSubmit({
+      const result = await handleSubmit({
         labels,
         work_date: selectedDate,
         hours: card.hours,
         description: card.name,
       });
+
+      return result;
     });
+
+    const results = await Promise.all(promises);
+    const isSuccess = results.every(Boolean);
+    setIsToastVisible(isSuccess);
   };
 
   return (
@@ -147,6 +170,11 @@ const App: React.FC = () => {
       <button className="app-button" onClick={onClick}>
         Add to Metrics
       </button>
+      <Toast
+        message="Metrics set successfully!"
+        isVisible={isToastVisible}
+        onHide={() => setIsToastVisible(false)}
+      />
     </div>
   );
 };

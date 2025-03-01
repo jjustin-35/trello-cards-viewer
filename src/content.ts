@@ -9,26 +9,28 @@ let subjects: Subject[] = [];
 
 // 監聽來自 extension 的訊息
 chrome.runtime.onMessage.addListener(
-  async (request: { type: string; data: MetricsData }, _, sendResponse) => {
+  (request: { type: string; data: MetricsData }, _, sendResponse) => {
     if (request.type === "SET_METRICS") {
-      try {
-        const { labels } = request.data;
-        const subjectIds = labels
-          .map((label) => getSubjectId(label, subjects))
-          .filter(Boolean);
-        const subject_id = subjectIds?.[0] || projectsTransform.other;
+      (async () => {
+        try {
+          const { labels } = request.data;
+          const subjectIds = labels
+            .map((label) => getSubjectId(label, subjects))
+            .filter(Boolean);
+          const subject_id = subjectIds?.[0] || projectsTransform.other;
 
-        const data = {
-          ...request.data,
-          subject_id,
-        };
+          const data = {
+            ...request.data,
+            subject_id,
+          };
 
-        const result = await setMetrics(data);
-        sendResponse({ success: !result.error });
-      } catch (error) {
-        console.error("Error setting metrics:", error);
-        sendResponse({ success: false, error: error.message });
-      }
+          const result = await setMetrics(data);
+          sendResponse({ success: !result.error });
+        } catch (error) {
+          console.error("Error setting metrics:", error);
+          sendResponse({ success: false, error: error.message });
+        }
+      })();
       return true; // 表示我們會非同步回應
     }
   }
